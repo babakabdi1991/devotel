@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-echo "🐶 pre-commit stage auto fix ... "
+echo "run before commit"
 npx lint-staged
