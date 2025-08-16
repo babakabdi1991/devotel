@@ -1,12 +1,7 @@
 import { useAppSelector } from '../../store/hooks'
 import translation from '../../translation'
 import DraggableTodoCard from '../draggableTodoCard'
-
-type TodoListProps = {
-  handleToggleTodo: (id: number) => void
-  handleDeleteTodo: (id: number) => void
-  isUpdatePending: boolean
-}
+import type { TodoListProps } from './types'
 
 export default function TodoList({ handleToggleTodo, handleDeleteTodo, isUpdatePending }: TodoListProps) {
   const { sortedTodos } = useAppSelector((state) => state.todos)

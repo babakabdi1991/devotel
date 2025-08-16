@@ -1,6 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import type { Todo } from '../_common/types'
+import { getTodoIndex } from './utils'
 
 interface TodoState {
   todos: Todo[]
@@ -28,7 +29,6 @@ const todoSlice = createSlice({
     },
     setTodos: (state, action: PayloadAction<Todo[]>) => {
       state.todos = action.payload
-      // Initialize sorted todos if empty
       if (state.sortedTodos.length === 0) {
         state.sortedTodos = action.payload
       }
@@ -39,13 +39,11 @@ const todoSlice = createSlice({
     },
     updateTodo: (state, action: PayloadAction<Todo>) => {
       const updatedTodo = action.payload
-      // Update in todos array
-      const todoIndex = state.todos.findIndex((todo) => todo.id === updatedTodo.id)
+      const todoIndex = getTodoIndex(state.todos, updatedTodo.id)
       if (todoIndex !== -1) {
         state.todos[todoIndex] = updatedTodo
       }
-      // Update in sortedTodos array
-      const sortedIndex = state.sortedTodos.findIndex((todo) => todo.id === updatedTodo.id)
+      const sortedIndex = getTodoIndex(state.sortedTodos, updatedTodo.id)
       if (sortedIndex !== -1) {
         state.sortedTodos[sortedIndex] = updatedTodo
       }

@@ -3,8 +3,6 @@ export default {
   retry: 'Retry',
   loading: 'Loading todos...',
   emptyTodo: 'No todos yet. Add one above!',
-  deleteAction: 'Deleting todo...',
-  addAction: 'Adding todo...',
-  updateAction: 'Updating todo...',
+  pendingAction: 'Please Wait...',
   headerTitle: 'Todo List',
 }

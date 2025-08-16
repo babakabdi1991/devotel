@@ -1,18 +1,10 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import type { Todo } from '../../_common/types'
+import { CheckIcon } from '../../../../public/Icon/CheckIcon'
+import { DeleteIcon } from '../../../../public/Icon/DeleteIcon'
+import type { DraggableTodoCardProps } from './types'
 
-export default function DraggableTodoCard({
-  todo,
-  onToggle,
-  onDelete,
-  isUpdating,
-}: {
-  todo: Todo
-  onToggle: (id: number) => void
-  onDelete: (id: number) => void
-  isUpdating: boolean
-}) {
+export default function DraggableTodoCard({ todo, onToggle, onDelete, isUpdating }: DraggableTodoCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: todo.id,
     transition: {
@@ -30,6 +22,16 @@ export default function DraggableTodoCard({
     boxShadow: isDragging ? '0 10px 25px rgba(0, 0, 0, 0.15)' : 'none',
   }
 
+  function handleToggle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.stopPropagation()
+    onToggle(todo.id)
+  }
+
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.stopPropagation()
+    onDelete(todo.id)
+  }
+
   return (
     <div
       ref={setNodeRef}
@@ -41,10 +43,7 @@ export default function DraggableTodoCard({
       } ${isDragging ? 'shadow-lg' : ''} ${isUpdating ? 'opacity-50' : ''}`}
     >
       <button
-        onClick={(e) => {
-          e.stopPropagation()
-          onToggle(todo.id)
-        }}
+        onClick={handleToggle}
         disabled={isUpdating}
         className={`flex-shrink-0 w-5 h-5 rounded border-2 transition-all duration-200 ${
           todo.completed
@@ -52,15 +51,7 @@ export default function DraggableTodoCard({
             : 'border-gray-300 hover:border-blue-500 hover:scale-110'
         } ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
-        {todo.completed && (
-          <svg className='w-full h-full' fill='currentColor' viewBox='0 0 20 20'>
-            <path
-              fillRule='evenodd'
-              d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-              clipRule='evenodd'
-            />
-          </svg>
-        )}
+        {todo.completed && <CheckIcon />}
       </button>
 
       <span
@@ -72,23 +63,13 @@ export default function DraggableTodoCard({
       </span>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation()
-          onDelete(todo.id)
-        }}
+        onClick={handleDelete}
         disabled={isUpdating}
         className={`text-gray-400 hover:text-red-600 transition-all duration-200 hover:scale-110 ${
           isUpdating ? 'opacity-50 cursor-not-allowed' : ''
         }`}
       >
-        <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
-          />
-        </svg>
+        <DeleteIcon />
       </button>
     </div>
   )

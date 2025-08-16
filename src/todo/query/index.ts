@@ -1,10 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { useAppDispatch } from '../store/hooks'
-import { addTodo, deleteTodo, setError, updateTodo } from '../store/todoSlice'
+import { addTodo, deleteTodo, setError, setTodos, updateTodo } from '../store/todoSlice'
 import type { CreateTodoRequest, UpdateTodoRequest } from '../types'
 import { todoApi } from './api'
 
 export function useGetTodo() {
+  const dispatch = useAppDispatch()
+
   const {
     data: todos = [],
     isLoading,
@@ -13,6 +16,20 @@ export function useGetTodo() {
     queryKey: ['todos'],
     queryFn: todoApi.getTodos,
   })
+
+  // Update Redux state when data is loaded
+  useEffect(() => {
+    if (todos.length > 0) {
+      dispatch(setTodos(todos))
+    }
+  }, [todos, dispatch])
+
+  // Handle query errors
+  useEffect(() => {
+    if (getTodosError) {
+      dispatch(setError(getTodosError.message))
+    }
+  }, [getTodosError, dispatch])
 
   return { todos, isLoading, getTodosError }
 }
