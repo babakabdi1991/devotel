@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAppSelector } from '../../store/hooks'
-import { baseSchema, type TodoFormData } from '../../validation'
 import type { FormProps } from './types'
+import { baseSchema, type TodoFormData } from './validation'
 
 export default function AddTodoForm({ mutate, isPending }: FormProps) {
   const { sortedTodos = [] } = useAppSelector((state) => state.todos)
