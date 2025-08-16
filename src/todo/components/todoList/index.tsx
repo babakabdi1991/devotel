@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../store/hooks'
+import translation from '../../translation'
 import DraggableTodoCard from '../draggableTodoCard'
 
 type TodoListProps = {
@@ -30,7 +31,7 @@ export default function TodoList({ handleToggleTodo, handleDeleteTodo, isUpdateP
 function EmptyTodo() {
   return (
     <div className='space-y-2'>
-      <p className='text-gray-500 text-center py-4'>No todos yet. Add one above!</p>
+      <p className='text-gray-500 text-center py-4'>{translation.emptyTodo}</p>
     </div>
   )
 }

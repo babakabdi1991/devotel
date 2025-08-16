@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import type { Todo } from '../_common/types'
+import type { Todo } from '../../_common/types'
+
 export default function DraggableTodoCard({
   todo,
   onToggle,

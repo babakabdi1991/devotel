@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import translation from '../../translation'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -12,5 +13,5 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 
 function Header() {
-  return <h1 className='text-2xl font-bold text-gray-900 mb-6 text-center'>Todo List</h1>
+  return <h1 className='text-2xl font-bold text-gray-900 mb-6 text-center'>{translation.headerTitle}</h1>
 }

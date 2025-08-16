@@ -1,16 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import type { UseMutateFunction } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import type { Todo } from '../../_common/types'
 import { useAppSelector } from '../../store/hooks'
-import type { CreateTodoRequest } from '../../types'
 import { baseSchema, type TodoFormData } from '../../validation'
-
-type FormProps = {
-  mutate: UseMutateFunction<Todo, Error, CreateTodoRequest, unknown>
-  isPending: boolean
-}
+import type { FormProps } from './types'
 
 export default function AddTodoForm({ mutate, isPending }: FormProps) {
   const { sortedTodos = [] } = useAppSelector((state) => state.todos)
@@ -45,7 +38,6 @@ export default function AddTodoForm({ mutate, isPending }: FormProps) {
   } = useForm<TodoFormData>({
     resolver: zodResolver(schema),
     defaultValues: { todo: '' },
-    mode: 'onChange',
   })
 
   return (
