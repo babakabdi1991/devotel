@@ -18,22 +18,26 @@ A modern, feature-rich Todo application built with React, TypeScript, and modern
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 19** - Latest React with concurrent features
 - **TypeScript** - Type-safe JavaScript
 - **Vite** - Fast build tool and development server
 - **Tailwind CSS** - Utility-first CSS framework
 
 ### State Management & Data Fetching
+
 - **Redux Toolkit** - Predictable state management
 - **React Query (TanStack Query)** - Server state management
 - **React Hook Form** - Performant forms with validation
 
 ### UI/UX
+
 - **@dnd-kit** - Accessible drag-and-drop functionality
 - **Zod** - TypeScript-first schema validation
 - **Autoprefixer & PostCSS** - CSS processing
 
 ### Development Tools
+
 - **ESLint** - Code linting and formatting
 - **Vitest** - Fast unit testing framework
 - **Husky** - Git hooks for code quality
@@ -42,29 +46,28 @@ A modern, feature-rich Todo application built with React, TypeScript, and modern
 ## 📦 Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
-   cd eslint
+   cd devotel
    ```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   pnpm install
-   # or
-   yarn install
-   ```
+
+```bash
+
+pnpm install
+```
 
 3. **Start the development server**
-   ```bash
-   npm run start
-   # or
-   pnpm start
-   ```
+
+```bash
+
+pnpm start
+```
 
 4. **Open your browser**
-   Navigate to `http://localhost:5173` to view the application.
+   Navigate to `http://localhost:3000` to view the application.
 
 ## 🧪 Testing
 
@@ -114,15 +117,19 @@ src/
 ## 🎯 Key Features Explained
 
 ### Drag & Drop Reordering
+
 The application uses `@dnd-kit` for accessible drag-and-drop functionality. Users can reorder todos by dragging them to new positions, with the order persisted in the Redux store.
 
 ### Optimistic Updates
+
 The UI updates immediately when users perform actions (create, update, delete), providing a snappy user experience while the actual API calls happen in the background.
 
 ### Form Validation
+
 All forms use Zod schemas for validation, ensuring data integrity and providing clear error messages to users.
 
 ### Responsive Layout
+
 The application features a fixed header and footer with a scrollable content area, ensuring the interface remains usable on all device sizes.
 
 ## 🔧 Available Scripts
@@ -132,6 +139,46 @@ The application features a fixed header and footer with a scrollable content are
 - `npm run preview` - Preview production build
 - `npm run test` - Run test suite
 - `npm run lint` - Run ESLint
+
+## 🐶 Git Hooks with Husky
+
+This project uses **Husky** to enforce code quality standards before commits. The pre-commit hook automatically runs linting and formatting on staged files.
+
+### Pre-commit Hook Configuration
+
+The pre-commit hook is configured in `.husky/pre-commit` and runs `lint-staged` to process only the files that are staged for commit.
+
+**What happens on commit:**
+
+1. **ESLint Auto-fix**: Automatically fixes ESLint issues in staged TypeScript/React files
+2. **Code Quality Check**: Ensures all staged code meets the project's linting standards
+3. **Commit Prevention**: If linting fails, the commit is prevented until issues are resolved
+
+### Lint-staged Configuration
+
+```json
+{
+  "src/**/*.{ts,tsx}": ["eslint --fix"]
+}
+```
+
+This configuration:
+
+- Targets all TypeScript and React files in the `src/` directory
+- Runs ESLint with auto-fix on staged files only
+- Ensures consistent code style across the project
+
+### Setup
+
+The Husky hooks are automatically installed when you run:
+
+```bash
+npm install
+# or
+pnpm install
+```
+
+The `prepare` script in `package.json` ensures Husky is properly configured for the project.
 
 ## 🧪 Writing Tests
 
@@ -146,17 +193,15 @@ describe('getTodoIndex', () => {
   it('should return the correct index for existing todo', () => {
     const todos = [
       { id: 1, todo: 'Test 1', completed: false, userId: 1 },
-      { id: 2, todo: 'Test 2', completed: true, userId: 1 }
+      { id: 2, todo: 'Test 2', completed: true, userId: 1 },
     ]
-    
+
     expect(getTodoIndex(todos, 2)).toBe(1)
   })
 
   it('should return -1 for non-existing todo', () => {
-    const todos = [
-      { id: 1, todo: 'Test 1', completed: false, userId: 1 }
-    ]
-    
+    const todos = [{ id: 1, todo: 'Test 1', completed: false, userId: 1 }]
+
     expect(getTodoIndex(todos, 999)).toBe(-1)
   })
 })
